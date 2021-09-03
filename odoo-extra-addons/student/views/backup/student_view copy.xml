@@ -1,0 +1,79 @@
+<odoo>
+  <data>
+   <record id="iti_student_tree_view" model="ir.ui.view">
+       <field name="name">"ITI Student Tree View"</field>
+       <field name="model">iti.student1</field>
+       <field name="arch" type = "xml">
+           <tree>
+              <field name="name"/>
+              <field name="age"/>
+              <field name="email" />
+           </tree> 
+       </field>
+     </record>
+     
+     <record id="iti_student_form_view" model="ir.ui.view">
+      <field name="name">"ITI Student Form View"</field>
+      <field name="model">iti.student1</field>
+      <field name="arch" type = "xml">
+        <!-- form view تظهر فى create-->
+        <form>
+          <group>
+            <group>
+              <field name="name" />
+            </group>
+            <group>
+              <field name="email"/>
+            </group>
+            <group>
+              <field name="age" />
+            </group>
+            <group>
+              <field name="track_id"  string="my Track"/>
+            </group>
+            <group>
+              <field name="gender"  string="sex"/>
+            </group>
+            <group>
+              <field name = "skill_id"  string = "my skill" widget = "many2many_tags" />
+            </group>
+          </group> 
+         <notebook>
+          <page name="image" string="IMAGE">
+            <field name="image" />
+          </page>
+          <page name = "cv" string="CV"> 
+            <field name="note" />
+          </page>
+          <page name="bio" string="BIO">
+            <field name="bio" />
+            
+          </page>
+           
+         </notebook> 
+        </form>
+      </field>
+    </record>
+    <!--  <record id="ITI_student_action" model="ir.ui.view">-->
+      <record id="student_action" model="ir.actions.act_window">
+          <field name="name">ITI Students</field>
+          <field name="res_model">iti.student1</field>
+          <field name="view_type">form</field>
+          <field name="view_mode">tree,form</field>   
+      </record> 
+      <!-- ITI_menu  no parent no action -->
+        <menuitem id="ITI_menu" 
+        name="ITI"/>
+        <!-- ITI_data_menu  have  parent but no action -->
+        <menuitem id="ITI_data_menu"
+                  parent="ITI_menu"
+                  name="data"/>
+        <!-- ITI_student_menu  have  parent and have action  action -->
+        <menuitem
+            id="ITI_student_menu"
+            name="Students"
+            parent="ITI_data_menu"
+            action="student_action"/>
+                 
+  </data>
+</odoo>

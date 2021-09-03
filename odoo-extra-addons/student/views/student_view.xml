@@ -1,0 +1,227 @@
+<odoo>
+  <data>
+    <record id = "iti_student_tree_view" model = "ir.ui.view">
+       <field name = "name">"ITI Student Tree View"</field>
+       <field name = "model">iti.student1</field>
+       <field name = "arch" type = "xml">
+          <tree>
+               <field name = "name"/>
+               <field name = "age"/>
+               <field name = "email" />
+               <field name = "track_id"  string="Track" widget="iti_track_many2one" />
+               <field name = "track_desc"/>
+               <field name = "skill_id" />
+               <field name = "salary" /> <!--to show compute field in tree view performance may be slow-->
+               <field name = "student_unaic" />
+          </tree> 
+       </field>
+
+    </record>
+     
+     <record id="iti_student_form_view" model="ir.ui.view">
+      <field name="name">"ITI Student Form View"</field>
+      <field name="model">iti.student1</field>
+      <field name="arch" type = "xml">
+        <!-- form view تظهر فى create-->
+      <form>
+        <header>
+        
+           <button type = "object"
+                   name = "iq_pass"
+                   string = "Pass IQ"
+                   states = "apply" />
+
+            <!--Iq stage with dynamic method on python -->
+
+           <button type = "object"
+                   name = "dynamic_change_state"
+                   string = "Technial"
+                   states = "iq" 
+                   context = "{'state':'tech'}"/>  
+
+           <button type = "object"
+                   name = "dynamic_change_state"
+                   string = "Back to Appiled"
+                   states = "iq"    
+                  context = "{'state':'apply'}"/>    
+
+           <button type = "object"
+                   name = "refused_button"
+                   string = "Rrefused "
+                   states = "iq" />   
+           <button type = "object"
+                   name = "accept_button"
+                   string = "Accept "
+                   states = "iq" />  
+
+                  <!--Technial stage-->                                              
+           <button type = "object"
+                   name = "iq_pass"
+                   string = "Back to IQ Test"
+                   states = "tech" /> 
+
+                  <!--refuse  stage-->
+
+
+           <button type = "object"
+                   name = "refused_button"
+                   string = "Rrefused "
+                   states = "tech" />  
+           <button type = "object"
+                   name = "tech_pass"
+                   string = "Back to Passed Technical"
+                   states = "refused" />  
+
+
+
+
+                  <!--accept  stage-->
+
+
+           <button type = "object"
+                   name = "accept_button"
+                   string = "Accept "
+                   states = "tech"
+                    />  
+           <button type = "object"
+                   name = "tech_pass"
+                   string = "Back to Passed Technical"
+                   states = "accept" />   
+
+                 <!-- Avtion buttons -->
+
+           <button type = "action"
+                   name = "%(track_action)d"
+                   string = "Open Tracks "
+                   states = "apply" />                     
+                   
+               
+           <button type = "action"
+                   name = "%(skill_action)d"
+                   string = "Open Skills "
+                   states = "apply" />
+
+
+           <button type = "action"
+                   name = "%(course_action)d"
+                   string = "Open Courses "
+                   states = "apply" />                   
+
+
+                                                                     
+    
+                                    
+           <field name = "state" widget = "statusbar" clickable="True"/> 
+        </header>
+        <sheet>
+              <field name = "student_unaic" />         
+          <group>
+            <group>
+              <field name = "name" />
+            </group>
+            <group>
+              <field name = "email"/>
+            </group>
+            <group>
+              <field name = "age" />
+            </group>
+            <group>
+              <field name = "track_id"  string = "my Track"  domain= "['&amp;', ('desc', '!=' , False ),('track_time' , '!=' , False )]" />  <!--  domain= "['&amp;', ('desc', '!=' , False ),('track_time' , '!=' , False )]"polish notation  -->
+            </group>
+            <group>
+              <field name = "gender"  />
+            </group>            
+            <group>
+              <field name = "instructor_id"/>
+            </group>
+            <group>
+              <field name = "skill_id"  string = "my skill"  widget = "many2many_tags"   />
+            </group>
+            <group>
+              <field name = "track_desc"/>
+            </group>
+            <group>
+              <field name = "salary"  string = "student salary"/>
+            </group> 
+            <group>
+             <field name = "shifts" string = "shifts"/>
+            </group>
+            <group>
+              <field name = "graduate_degree"/>
+            </group>
+            <group>
+              <field name = "time" string = 'Track time'/>
+            </group>
+            <group>
+              <field name = 'student_unaic'/>
+            </group>            
+            <group>
+              <field name = "Military_status" 
+                  attrs = "{
+                    'invisible': [('gender','!=','m')]
+                    }"
+
+              
+              />  
+            </group>
+          </group> 
+         <notebook>
+          <page name="image" string="IMAGE">
+            <field name="image"  widget = "image" />
+          </page>
+          <page name="cv" string="CV" invisible="True">  <!--to hide field
+          -->
+            <field name="note" />
+          </page>
+          <page name="bio" string="BIO">
+            <field name="bio" />
+            
+          </page>
+          <page name="grade" string="Grade">
+            <field name="course_line_ids">
+              <!-- TREE & form  ON THE FLY applicable just in One2many relation -->
+              <!-- TREE ON THE FLY  -->
+              <tree editable="bottom">
+                <field name="course_id" />
+                <field name="grade" />
+             <!--  <field name="student_track" /> -->
+              </tree>
+              <form>
+                 <!-- Form ON THE FLY  -->
+                <group>
+                 <field name="course_id" />
+                 <field name="grade" />
+               <!--  <field name="student_track" /> -->
+                </group> 
+              </form>
+            </field>
+          </page>
+           
+         </notebook> 
+        </sheet>
+      </form>
+      </field>
+    </record>
+    <!--  <record id="ITI_student_action" model="ir.ui.view">-->
+      <record id="student_action" model="ir.actions.act_window">
+          <field name="name">ITI Students</field>
+          <field name="res_model">iti.student1</field>
+          <field name="view_type">form</field>
+          <field name="view_mode">tree,form</field>   
+      </record> 
+      <!-- ITI_menu  no parent no action -->
+        <menuitem id="ITI_menu" 
+        name="ITI"/>
+        <!-- ITI_data_menu  have  parent but no action -->
+        <menuitem id="ITI_data_menu"
+                  parent="ITI_menu"
+                  name="data"/>
+        <!-- ITI_student_menu  have  parent and have action  action -->
+        <menuitem
+            id="ITI_student_menu"
+            name="Students"
+            parent="ITI_data_menu"
+            action="student_action"/>
+                 
+  </data>
+</odoo>

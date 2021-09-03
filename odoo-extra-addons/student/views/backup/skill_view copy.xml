@@ -1,0 +1,39 @@
+<odoo>
+    <data>     
+       
+       <record id="iti_tskill_form_view" model="ir.ui.view">
+        <field name="name">"ITI skill Form View"</field>
+        <field name="model">iti.skill</field>
+        <field name="arch" type = "xml">
+          <form>
+            <group>
+              <group>
+                <field name="name"/>
+              </group>
+                <field name="student_id" />
+            </group> 
+          </form>
+        </field>
+       </record>
+   
+        <record id = "skill_action" model="ir.actions.act_window">
+            <field name="name">ITI Skill</field>
+            <field name="res_model">iti.skill</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>   
+        </record> 
+     
+          <menuitem id = "ITI_skill_menu" 
+          name="ITI"/>
+    
+          <menuitem id = "ITI_data_menu"
+                    parent = "ITI_skill_menu"
+                    name = "data"/>
+         
+          <menuitem
+              id = "ITI_skills_menu"
+              name = "skills"
+              parent = "ITI_data_menu"
+              action = "skill_action"/>
+    </data>
+  </odoo>

@@ -1,0 +1,60 @@
+<odoo>
+    <data>
+        <record id="iti_instructor_tree_view" model="ir.ui.view">
+            <field name="name">"ITI instructor Tree View"</field>
+            <field name="model">iti.instructor</field>
+            <field name="arch" type = "xml">
+                <tree>
+                   <field name = "name" string = "instructor name"/>    
+                   <field name="instructor_unaic"/>
+                </tree> 
+            </field>
+        </record>
+       
+       <record id="iti_instructor_form_view" model="ir.ui.view">
+        <field name="name">"ITI instructor Form View"</field>
+        <field name="model">iti.instructor</field>
+        <field name="arch" type = "xml">
+          <form>
+            <group>
+              <group>
+                <field name="name" />
+              </group>
+              <group>
+                <field name="age"/>
+              </group>
+              <group>
+                <field name="email"/>
+              </group>   
+              <group>
+                <field name="gender"/>
+              </group>      
+              <group>
+                <field name="instructor_unaic"/>
+              </group>                     
+            </group> 
+          </form>
+        </field>
+       </record>
+   
+        <record id = "instructor_action" model="ir.actions.act_window">
+            <field name="name">ITI Instructor</field>
+            <field name="res_model">iti.instructor</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>   
+        </record> 
+     
+          <menuitem id = "ITI_instructor_menu" 
+          name="ITI"/>
+    
+          <menuitem id = "ITI_data_menu"
+                    parent = "ITI_menu"
+                    name = "data"/>
+         
+          <menuitem
+              id = "ITI_instructor_menu"
+              name = "instructor"
+              parent = "ITI_data_menu"
+              action = "instructor_action"/> 
+    </data>
+  </odoo>

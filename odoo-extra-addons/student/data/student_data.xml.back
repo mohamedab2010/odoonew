@@ -1,0 +1,9 @@
+<odoo>
+    <data>
+        <record id = "student_1" model="iti.student1">      
+            <field name="name">omr</field>
+            <field name="age">4</field>
+        </record>
+    </data>
+</odoo>
+                
